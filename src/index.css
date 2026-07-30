@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design tokens
+   The Academy UI was authored against a few intermediate slate shades
+   that are not part of Tailwind's stock palette (slate-650 / 750 / 755
+   / 850). They are declared here so the intended design actually
+   renders instead of silently falling back to "no style".
+   ------------------------------------------------------------------ */
+@theme {
+  --color-slate-650: #3d4b61;
+  --color-slate-750: #293546;
+  --color-slate-755: #27333f;
+  --color-slate-850: #172033;
+
+  --animate-fade-in: fadeIn 0.35s ease-out both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The app markup uses the camelCase utility name `animate-fadeIn`. */
+.animate-fadeIn {
+  animation: var(--animate-fade-in);
+}
+
+/* ------------------------------------------------------------------
+   Base layer
+   ------------------------------------------------------------------ */
+@layer base {
+  html {
+    /* Prevents a white flash before React paints the dark shell. */
+    background-color: var(--color-slate-900);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Keyboard focus stays visible everywhere. */
+  :focus-visible {
+    outline: 2px solid var(--color-indigo-400);
+    outline-offset: 2px;
+  }
+}
+
+/* Terminal / code surfaces scroll a lot — keep the scrollbar on-theme. */
+@layer utilities {
+  .overflow-y-auto {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-slate-700) transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
